@@ -159,6 +159,29 @@ border-top:1px solid rgba(255,255,255,.08);
 @media(max-width:800px){
 .hero h1{font-size:36px}
 }
+  /* reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:.7s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* typing cursor */
+.typed::after{
+  content:"|";
+  margin-left:6px;
+  animation:blink .8s infinite;
+  color:#22c55e;
+}
+@keyframes blink{
+  0%,50%{opacity:1}
+  51%,100%{opacity:0}
+}
+
 </style>
 </head>
 
@@ -174,12 +197,12 @@ border-top:1px solid rgba(255,255,255,.08);
 </nav>
 
 <div class="hero">
-<h1>Modern Websites for <span>Growing Brands</span></h1>
+<h1>Modern Websites for <span class="typed"></span></h1>
 <p>I design clean and professional websites that help people and businesses build a strong online identity.</p>
 <a class="btn" href="#contact">Start Project</a>
 </div>
 
-<section id="services">
+<section id="services" class="reveal">
 <h2>Services</h2>
 <div class="grid">
 <div class="card">
@@ -199,7 +222,7 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 </section>
 
-<section id="pricing">
+<section id="pricing" class="reveal">
 <h2>Pricing</h2>
 <div class="grid">
 
@@ -224,7 +247,7 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="reveal">
 <h2>Contact Me</h2>
 
 <form>
@@ -239,6 +262,36 @@ border-top:1px solid rgba(255,255,255,.08);
 <footer>
 © 2026 Mohd Anas Khan — Client Portfolio Demo
 </footer>
+<script>
+/* Typing effect */
+const words = ["Growing Brands", "Creators", "Businesses", "Your Idea"];
+let w = 0, i = 0, deleting = false;
+const typed = document.querySelector(".typed");
+
+function typeLoop(){
+  const word = words[w];
+  if(!deleting){
+    typed.textContent = word.slice(0, i++);
+    if(i > word.length){ deleting = true; setTimeout(typeLoop, 900); return; }
+  }else{
+    typed.textContent = word.slice(0, i--);
+    if(i < 0){ deleting = false; w = (w+1)%words.length; i = 0; }
+  }
+  setTimeout(typeLoop, deleting ? 55 : 85);
+}
+typeLoop();
+
+/* Scroll reveal */
+const reveals = document.querySelectorAll(".reveal");
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:0.15});
+
+reveals.forEach(r=>io.observe(r));
+</script>
+  
 
 </body>
 </html>
