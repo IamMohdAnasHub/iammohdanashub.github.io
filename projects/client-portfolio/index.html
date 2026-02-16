@@ -42,6 +42,7 @@ nav a{
 color:#cbd5e1;
 text-decoration:none;
 margin-left:18px;
+transition:.3s;
 }
 nav a:hover{color:white}
 
@@ -181,12 +182,29 @@ border-top:1px solid rgba(255,255,255,.08);
   0%,50%{opacity:1}
   51%,100%{opacity:0}
 }
+  /* mouse glow */
+.glow{
+  position:fixed;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(34,197,94,.22);
+  filter:blur(90px);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  left:50%;
+  top:50%;
+  z-index:0;
+}
+
+body, nav, section, .hero, footer{position:relative; z-index:1;}
+  
 
 </style>
 </head>
 
 <body>
-
+<div class="glow" id="glow"></div>
 <nav>
 <div class="logo">ClientPortfolio</div>
 <div>
@@ -290,6 +308,41 @@ const io = new IntersectionObserver(entries=>{
 },{threshold:0.15});
 
 reveals.forEach(r=>io.observe(r));
+  
+  /* Active navbar on scroll */
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(sec => {
+    const secTop = sec.offsetTop - 120;
+    if (scrollY >= secTop) current = sec.getAttribute("id");
+  });
+
+  navLinks.forEach(link => {
+    link.style.color = "#cbd5e1";
+    if(link.getAttribute("href") === "#" + current){
+      link.style.color = "#22c55e";
+    }
+  });
+});
+  /* mouse glow follow */
+const glow = document.getElementById("glow");
+
+window.addEventListener("mousemove", (e) => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top  = e.clientY + "px";
+});
+
+// mobile touch support
+window.addEventListener("touchmove", (e) => {
+  const t = e.touches[0];
+  glow.style.left = t.clientX + "px";
+  glow.style.top  = t.clientY + "px";
+}, {passive:true});
+  
 </script>
   
 
