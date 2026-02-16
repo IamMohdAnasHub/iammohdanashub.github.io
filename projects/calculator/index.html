@@ -25,7 +25,7 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:14px;
+  gap:12px;
 }
 
 .title{
@@ -46,7 +46,7 @@ body{
 }
 
 .screen{
-  height:90px;
+  height:98px;
   border-radius:16px;
   padding:14px;
   background:rgba(0,0,0,0.25);
@@ -135,6 +135,47 @@ body{
   text-align:center;
   max-width:320px;
 }
+
+.history{
+  width:320px;
+  margin-top:12px;
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  backdrop-filter:blur(10px);
+}
+
+.history h4{
+  margin:0 0 10px;
+  font-size:14px;
+  color:#cbd5e1;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+.history ul{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.history li{
+  font-size:13px;
+  color:#94a3b8;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.history li span:last-child{
+  color:#e2e8f0;
+  font-weight:600;
+}
+
 a.back{
   color:#94a3b8;
   text-decoration:none;
@@ -150,7 +191,7 @@ a.back:hover{color:white}
 
     <div class="calc">
       <div class="screen">
-        <div class="small" id="expr"> </div>
+        <div class="small" id="expr"></div>
         <div class="big" id="out">0</div>
       </div>
 
@@ -181,7 +222,12 @@ a.back:hover{color:white}
       </div>
     </div>
 
-    <div class="note">Tip: keyboard also works (0-9, + - * /, Enter, Backspace).</div>
+    <div class="history">
+      <h4>History (last 5)</h4>
+      <ul id="historyList"></ul>
+    </div>
+
+    <div class="note">Tip: keyboard works (0-9, + - * / %, Enter, Backspace, Esc).</div>
     <a class="back" href="../../index.html">← Back to Portfolio</a>
   </div>
 
@@ -189,29 +235,57 @@ a.back:hover{color:white}
 (() => {
   const exprEl = document.getElementById("expr");
   const outEl  = document.getElementById("out");
+  const historyList = document.getElementById("historyList");
 
   // State
-  let current = "0";     // number being typed (string)
-  let previous = null;   // previous value (number)
-  let op = null;         // "+", "-", "*", "/", "%"
+  let current = "0";
+  let previous = null;
+  let op = null;
   let justEvaluated = false;
+
+  // History store
+  const history = []; // {exp, res}
+
+  const opSymbol = (o) => (o === "*") ? "×" : (o === "/") ? "÷" : o;
 
   const fmt = (n) => {
     if (!isFinite(n)) return "Error";
-    // avoid long float noise
     const s = Number(n.toFixed(12)).toString();
     return s.length > 14 ? n.toExponential(6) : s;
   };
 
   const setOut = (v) => { outEl.textContent = v; };
 
+  // Live expression like: 12 + 7
   const setExpr = () => {
     if (op && previous !== null) {
-      const sym = (op === "*") ? "×" : (op === "/") ? "÷" : op;
-      exprEl.textContent = `${fmt(previous)} ${sym}`;
+      const sym = opSymbol(op);
+      const right = (current !== "0" || current.includes(".")) ? current : "";
+      exprEl.textContent = `${fmt(previous)} ${sym} ${right}`.trim();
     } else {
       exprEl.textContent = "";
     }
+  };
+
+  const renderHistory = () => {
+    historyList.innerHTML = "";
+    if (history.length === 0) {
+      const li = document.createElement("li");
+      li.innerHTML = `<span style="color:#94a3b8">No history yet</span><span></span>`;
+      historyList.appendChild(li);
+      return;
+    }
+    history.slice(0,5).forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span>${item.exp}</span><span>${item.res}</span>`;
+      historyList.appendChild(li);
+    });
+  };
+
+  const addHistory = (exp, res) => {
+    history.unshift({exp, res}); // newest on top
+    if (history.length > 5) history.length = 5;
+    renderHistory();
   };
 
   const inputNum = (d) => {
@@ -219,12 +293,14 @@ a.back:hover{color:white}
     if (current === "0") current = d;
     else if (current.length < 16) current += d;
     setOut(current);
+    setExpr();
   };
 
   const inputDot = () => {
     if (justEvaluated) { current = "0"; justEvaluated = false; op = null; previous = null; }
     if (!current.includes(".")) current += ".";
     setOut(current);
+    setExpr();
   };
 
   const clearAll = () => {
@@ -237,10 +313,11 @@ a.back:hover{color:white}
   };
 
   const backspace = () => {
-    if (justEvaluated) return; // keep result stable
+    if (justEvaluated) return;
     if (current.length <= 1) current = "0";
     else current = current.slice(0, -1);
     setOut(current);
+    setExpr();
   };
 
   const compute = (a, b, operator) => {
@@ -272,13 +349,15 @@ a.back:hover{color:white}
 
   const equals = () => {
     if (op === null || previous === null) return;
+
     const curNum = parseFloat(current);
+    const expText = `${fmt(previous)} ${opSymbol(op)} ${current}`;
     const result = compute(previous, curNum, op);
 
-    setExpr();
     setOut(fmt(result));
+    addHistory(expText, fmt(result));
 
-    // prepare for next input
+    // reset state
     current = fmt(result);
     previous = null;
     op = null;
@@ -315,6 +394,7 @@ a.back:hover{color:white}
   });
 
   // init
+  renderHistory();
   clearAll();
 })();
 </script>
