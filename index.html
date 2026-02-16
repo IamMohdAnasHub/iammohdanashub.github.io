@@ -26,6 +26,7 @@ body{
   background-size:400% 400%;
   animation:bg 14s ease infinite;
   overflow-x:hidden;
+
   opacity:0;
   transform:translateY(10px);
   transition:opacity .7s ease, transform .7s ease;
@@ -38,7 +39,7 @@ body.loaded{opacity:1;transform:translateY(0);}
   100%{background-position:0% 50%}
 }
 
-/* Glow */
+/* Glow follow */
 .glow{
   position:fixed;
   width:260px;height:260px;border-radius:50%;
@@ -50,10 +51,11 @@ body.loaded{opacity:1;transform:translateY(0);}
   z-index:0;
 }
 
+/* Layout */
 .wrap{position:relative;z-index:1}
 .container{width:min(1100px,92%);margin:auto}
 
-/* NAV */
+/* Nav */
 nav{
   position:fixed;top:0;left:0;right:0;
   z-index:50;
@@ -67,21 +69,17 @@ nav{
 }
 .brand{
   display:flex;align-items:center;gap:10px;
-  font-weight:700;
+  font-weight:700;letter-spacing:.4px;
 }
-.dot{
-  width:10px;height:10px;border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 18px rgba(34,197,94,.45);
-}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(34,197,94,.45)}
 nav a{
-  color:#cbd5e1;text-decoration:none;
+  color:#cbd5e1;text-decoration:none;font-weight:500;
   margin-left:16px;
   transition:.25s;
 }
 nav a:hover{color:white}
 
-/* HERO */
+/* Hero */
 .hero{
   padding:110px 0 60px;
   min-height:100vh;
@@ -92,8 +90,7 @@ nav a:hover{color:white}
 }
 .kicker{
   display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
+  padding:6px 12px;border-radius:999px;
   background:rgba(34,197,94,.12);
   border:1px solid rgba(34,197,94,.25);
   color:#bbf7d0;
@@ -101,8 +98,8 @@ nav a:hover{color:white}
 }
 h1{
   margin:14px 0 10px;
-  font-size:52px;
-  line-height:1.08;
+  font-size:54px;
+  line-height:1.05;
 }
 .grad{
   background:linear-gradient(90deg,var(--green),#4ade80);
@@ -115,7 +112,6 @@ h1{
   max-width:620px;
 }
 
-/* buttons */
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
@@ -127,6 +123,7 @@ h1{
 .btn.primary{
   background:linear-gradient(45deg,var(--green),#16a34a);
   color:white;
+  box-shadow:0 18px 40px rgba(34,197,94,.18);
 }
 .btn.primary:hover{transform:translateY(-3px)}
 .btn.ghost{
@@ -135,23 +132,22 @@ h1{
   color:var(--text);
 }
 .btn.ghost:hover{transform:translateY(-3px)}
-.btn.small{padding:10px 14px;font-size:13px}
+.btn.small{padding:10px 14px;border-radius:12px;font-size:13px}
 
-/* stats */
 .stats{
   display:flex;gap:14px;flex-wrap:wrap;
   margin-top:18px;
 }
 .stat{
-  padding:12px 14px;
-  border-radius:16px;
+  padding:12px 14px;border-radius:16px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
 }
-.stat b{display:block}
+.stat b{display:block;font-size:16px}
 .stat span{color:var(--muted);font-size:13px}
 
-/* profile card */
+/* Profile Card */
 .profile{
   background:var(--glass);
   border:1px solid var(--border);
@@ -159,20 +155,218 @@ h1{
   padding:22px;
   backdrop-filter:blur(12px);
   box-shadow:0 25px 70px rgba(0,0,0,.45);
+  position:relative;
+  overflow:hidden;
+
+  transform-style:preserve-3d;
+  will-change:transform;
+  transition:transform .15s ease;
 }
-.p-top{display:flex;align-items:center;gap:14px}
+.profile::before{
+  content:"";
+  position:absolute;
+  width:220px;height:220px;border-radius:50%;
+  background:rgba(34,197,94,.28);
+  filter:blur(90px);
+  top:-70px;right:-70px;
+}
+.p-top{display:flex;align-items:center;gap:14px;position:relative;z-index:2}
 .avatar{
   width:74px;height:74px;border-radius:50%;
   object-fit:cover;
   border:3px solid var(--green);
+  box-shadow:0 0 22px rgba(34,197,94,.25);
 }
-.p-name{margin:0;font-weight:700}
+.p-name{font-weight:700;font-size:18px;margin:0}
 .p-handle{margin:2px 0 0;color:var(--muted);font-size:13px}
-
-.badges{
-  display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;
-}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:2}
 .badges span{
+  font-size:12px;
+  padding:8px 12px;border-radius:999px;
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.22);
+  color:#bbf7d0;
+}
+.p-note{margin-top:14px;color:var(--muted);line-height:1.7;position:relative;z-index:2;font-size:14px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:2}
+
+/* Sections */
+section{padding:90px 0}
+.section-title{margin:0 0 8px;font-size:30px}
+.section-sub{margin:0;color:var(--muted);line-height:1.7}
+
+/* Project Grid */
+.grid{
+  margin-top:26px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+/* ===== SUPER PREMIUM PROJECT CARDS ===== */
+.card{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:20px;
+  padding:20px;
+  backdrop-filter:blur(10px);
+  transition:.25s;
+
+  position:relative;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.card:hover{transform:translateY(-6px)}
+.card h3{margin:0 0 6px}
+.card p{margin:0;color:var(--muted);line-height:1.6}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  background:linear-gradient(135deg, rgba(34,197,94,.65), rgba(59,130,246,.45), rgba(34,197,94,.35));
+  opacity:0;
+  filter:blur(6px);
+  transition:opacity .25s ease;
+  z-index:0;
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  z-index:1;
+}
+.card > *{ position:relative; z-index:2; }
+.card:hover::before{ opacity:1; }
+
+.card .row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  gap:10px;
+}
+.tag{
+  font-size:12px;color:#bbf7d0;
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.22);
+  padding:6px 10px;border-radius:999px;
+}
+
+/* shine */
+.card .shine{
+  position:absolute;
+  inset:-60px;
+  background:radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.18), transparent 45%);
+  opacity:0;
+  transition:opacity .2s ease;
+  z-index:2;
+  pointer-events:none;
+}
+.card:hover .shine{ opacity:1; }
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:.7s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+/* Footer */
+footer{
+  padding:40px 0;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.06);
+  opacity:.9;
+  font-size:14px;
+}
+
+/* Ripple */
+.ripple{
+  position:absolute;border-radius:50%;
+  transform:scale(0);
+  background:rgba(255,255,255,.35);
+  animation:ripple .6s linear;
+  pointer-events:none;
+}
+@keyframes ripple{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* ===== PROJECT MODAL (PREVIEW) ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(2,6,23,.65);
+  backdrop-filter:blur(10px);
+  z-index:999;
+}
+.modal.show{ display:flex; }
+
+.modal-box{
+  width:min(620px, 100%);
+  border-radius:22px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 30px 90px rgba(0,0,0,.55);
+  overflow:hidden;
+  position:relative;
+}
+
+.modal-top{
+  padding:16px 16px 10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.modal-title{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+}
+
+.modal-nav{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.icon-btn{
+  border:none;
+  background:rgba(255,255,255,.08);
+  color:#e2e8f0;
+  width:38px;height:38px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.icon-btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.12); }
+.icon-btn:active{ transform:scale(.98); }
+
+.modal-body{ padding:14px 16px 18px; }
+.modal-desc{
+  margin:0;
+  color:#94a3b8;
+  line-height:1.7;
+}
+
+.modal-meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.modal-meta .pill{
   font-size:12px;
   padding:8px 12px;
   border-radius:999px;
@@ -181,71 +375,65 @@ h1{
   color:#bbf7d0;
 }
 
-.p-note{margin-top:14px;color:var(--muted);line-height:1.7;font-size:14px}
-.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-
-/* sections */
-section{padding:90px 0}
-.section-title{margin:0 0 8px}
-.section-sub{margin:0;color:var(--muted)}
-
-.grid{
-  margin-top:26px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
-}
-.card{
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:20px;
-  padding:20px;
-  transition:.25s;
-}
-.card:hover{transform:translateY(-6px)}
-.card p{color:var(--muted)}
-.row{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-top:14px;
-}
-.tag{
-  font-size:12px;
-  color:#bbf7d0;
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.22);
-  padding:6px 10px;
-  border-radius:999px;
+.modal-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:16px;
 }
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(22px);transition:.7s ease;}
-.reveal.show{opacity:1;transform:translateY(0);}
-
-footer{
-  padding:40px 0;
-  text-align:center;
-  color:var(--muted);
-  border-top:1px solid rgba(255,255,255,.06);
+/* ===== MODAL THUMBNAIL ===== */
+.modal-thumb{
+  width:100%;
+  height:220px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  position:relative;
+  margin:10px 0 14px;
 }
-
-/* ripple */
-.ripple{
+.modal-thumb::before{
+  content:"";
   position:absolute;
-  border-radius:50%;
-  transform:scale(0);
-  background:rgba(255,255,255,.35);
-  animation:ripple .6s linear;
+  inset:-2px;
+  background:linear-gradient(135deg, rgba(34,197,94,.55), rgba(59,130,246,.35), rgba(34,197,94,.25));
+  filter:blur(10px);
+  opacity:.55;
+  z-index:0;
 }
-@keyframes ripple{
-to{transform:scale(4);opacity:0;}
+.modal-thumb img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+.modal-thumb .fallback{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#94a3b8;
+  font-weight:700;
+  letter-spacing:.5px;
+  text-align:center;
+  padding:18px;
+  background:rgba(2,6,23,.25);
 }
 
-/* mobile */
+/* Mobile */
 @media(max-width:900px){
-.hero{grid-template-columns:1fr;text-align:center;padding-top:120px}
-.sub{margin:auto}
-.cta,.stats,.links,.p-top{justify-content:center}
-h1{font-size:38px}
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:120px}
+  .sub{margin:0 auto}
+  .cta{justify-content:center}
+  .stats{justify-content:center}
+  h1{font-size:40px}
+  .p-top{justify-content:center}
+  .links{justify-content:center}
 }
 </style>
 </head>
@@ -254,147 +442,372 @@ h1{font-size:38px}
 <div class="glow" id="glow"></div>
 
 <div class="wrap">
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand"><span class="dot"></span> Mohd Anas Khan</div>
+      <div>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
 
-<nav>
-<div class="container nav-inner">
-<div class="brand"><span class="dot"></span> Mohd Anas Khan</div>
-<div>
-<a href="#projects">Projects</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
+  <header class="container hero" id="top">
+    <div>
+      <span class="kicker">Portfolio • HTML • CSS • JS</span>
+      <h1>From learner to <span class="grad">builder</span> — <span class="typed"></span></h1>
+      <p class="sub">
+        I’m learning web development step by step and building real projects daily.
+        My goal is to create useful digital products and professional websites.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" href="#projects">View Projects</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>Projects</b><span>4+ built</span></div>
+        <div class="stat"><b>Skills</b><span>HTML • CSS • JS</span></div>
+        <div class="stat"><b>Focus</b><span>Clean & professional</span></div>
+      </div>
+    </div>
+
+    <div class="profile" id="tiltCard" aria-label="profile card">
+      <div class="p-top">
+        <img class="avatar" src="anas.png" alt="Mohd Anas Khan">
+        <div>
+          <p class="p-name">IamMohdAnas</p>
+          <p class="p-handle">@iammohdanas_</p>
+        </div>
+      </div>
+
+      <div class="badges">
+        <span>Web Dev</span>
+        <span>UI Design</span>
+        <span>Projects</span>
+        <span>Learning Daily</span>
+      </div>
+
+      <p class="p-note">
+        Simple, clean, and real. No fake vibes — just work, progress, and consistency.
+      </p>
+
+      <div class="links">
+        <a class="btn small ghost" href="https://instagram.com/iammohdanas_" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn small ghost" href="mailto:contactiammohdanas@gmail.com">Email</a>
+        <a class="btn small primary" href="#projects">Explore</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="projects" class="reveal">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">These are my live builds — updated step by step.</p>
+
+      <div class="grid">
+        <div class="card" data-img="client-portfolio.png">
+          <div class="shine"></div>
+          <h3>Client Portfolio Website</h3>
+          <p>Real-world style website (services, pricing, contact) — clean & professional.</p>
+          <div class="row">
+            <span class="tag">Real-world</span>
+            <a class="btn small primary" href="projects/client-portfolio/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </div>
+
+        <div class="card" data-img="landing-page.png">
+          <div class="shine"></div>
+          <h3>Animated Landing Page</h3>
+          <p>Premium landing page with typing, reveal, glow, tilt and ripple effects.</p>
+          <div class="row">
+            <span class="tag">Animation</span>
+            <a class="btn small primary" href="projects/landing-page/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </div>
+
+        <div class="card" data-img="calculator.png">
+          <div class="shine"></div>
+          <h3>Calculator App</h3>
+          <p>Working calculator with history, edit mode, ±, %, clear history and keyboard support.</p>
+          <div class="row">
+            <span class="tag">JavaScript</span>
+            <a class="btn small primary" href="projects/calculator/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </div>
+
+        <div class="card" data-img="login-page.png">
+          <div class="shine"></div>
+          <h3>Glass Login Page</h3>
+          <p>Modern glassmorphism login UI — clean and responsive.</p>
+          <div class="row">
+            <span class="tag">UI</span>
+            <a class="btn small primary" href="projects/login-page/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <h2 class="section-title">About</h2>
+      <p class="section-sub">
+        I’m building my skills through consistent practice and real projects.
+        I like simple design, strong structure, and honest work.
+      </p>
+    </section>
+
+    <section id="contact" class="reveal">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Let’s connect. I’m open to small projects and learning collaborations.</p>
+
+      <div class="cta" style="justify-content:flex-start;margin-top:18px">
+        <a class="btn primary" href="mailto:contactiammohdanas@gmail.com">Email Me</a>
+        <a class="btn ghost" href="https://instagram.com/iammohdanas_" target="_blank" rel="noopener">DM on Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Mohd Anas Khan — Built with HTML, CSS & JS
+  </footer>
 </div>
-</div>
-</nav>
 
-<header class="container hero">
-<div>
-<span class="kicker">Portfolio • HTML • CSS • JS</span>
-<h1>From learner to <span class="grad">builder</span></h1>
-<p class="sub">
-I’m learning web development step by step and building real projects daily.
-</p>
+<!-- ===== MODAL (ULTRA PREMIUM) ===== -->
+<div class="modal" id="projectModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-top">
+      <h3 class="modal-title" id="modalTitle">Project</h3>
 
-<div class="cta">
-<a class="btn primary" href="#projects">View Projects</a>
-<a class="btn ghost" href="#contact">Contact</a>
-</div>
+      <div class="modal-nav">
+        <button class="icon-btn" id="prevBtn" aria-label="Previous">‹</button>
+        <button class="icon-btn" id="nextBtn" aria-label="Next">›</button>
+        <button class="icon-btn" id="modalClose" aria-label="Close">✕</button>
+      </div>
+    </div>
 
-<div class="stats">
-<div class="stat"><b>Projects</b><span>4+</span></div>
-<div class="stat"><b>Skills</b><span>HTML • CSS • JS</span></div>
-<div class="stat"><b>Status</b><span>Learning Daily 🚀</span></div>
-</div>
-</div>
+    <div class="modal-body">
+      <div class="modal-thumb" id="modalThumb">
+        <img id="modalImg" alt="Project preview" />
+        <div class="fallback" id="modalFallback">Preview coming soon</div>
+      </div>
 
-<div class="profile">
-<div class="p-top">
-<img class="avatar" src="anas.png" alt="Mohd Anas Khan">
-<div>
-<p class="p-name">IamMohdAnas</p>
-<p class="p-handle">@iammohdanas_</p>
-</div>
-</div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-meta" id="modalMeta"></div>
 
-<div class="badges">
-<span>Web Dev</span><span>UI Design</span><span>Projects</span>
-</div>
-
-<p class="p-note">Simple, clean and real — building skills step by step.</p>
-
-<div class="links">
-<a class="btn small ghost" href="https://instagram.com/iammohdanas_" target="_blank">Instagram</a>
-<a class="btn small primary" href="mailto:contactiammohdanas@gmail.com">Email</a>
-</div>
-</div>
-</header>
-
-<main class="container">
-
-<section id="projects" class="reveal">
-<h2 class="section-title">Projects</h2>
-<p class="section-sub">Live projects I built.</p>
-
-<div class="grid">
-<div class="card">
-<h3>Client Portfolio</h3>
-<p>Professional website demo for clients.</p>
-<div class="row"><span class="tag">Real-world</span>
-<a class="btn small primary" href="projects/client-portfolio/" target="_blank">Open</a></div>
-</div>
-
-<div class="card">
-<h3>Animated Landing Page</h3>
-<p>Premium UI with animations & effects.</p>
-<div class="row"><span class="tag">Animation</span>
-<a class="btn small primary" href="projects/landing-page/" target="_blank">Open</a></div>
-</div>
-
-<div class="card">
-<h3>Calculator App</h3>
-<p>Working calculator using JavaScript.</p>
-<div class="row"><span class="tag">JS</span>
-<a class="btn small primary" href="projects/calculator/" target="_blank">Open</a></div>
-</div>
-
-<div class="card">
-<h3>Glass Login Page</h3>
-<p>Modern glassmorphism login UI.</p>
-<div class="row"><span class="tag">UI</span>
-<a class="btn small primary" href="projects/login-page/" target="_blank">Open</a></div>
-</div>
-</div>
-</section>
-
-<section id="about" class="reveal">
-<h2 class="section-title">About</h2>
-<p class="section-sub">
-My goal is to become a professional developer and build useful digital products.
-</p>
-</section>
-
-<section id="contact" class="reveal">
-<h2 class="section-title">Contact</h2>
-<div class="cta">
-<a class="btn primary" href="mailto:contactiammohdanas@gmail.com">Email Me</a>
-<a class="btn ghost" href="https://instagram.com/iammohdanas_" target="_blank">Instagram</a>
-</div>
-</section>
-
-</main>
-
-<footer>
-© 2026 Mohd Anas Khan — Built with HTML, CSS & JS
-</footer>
-
+      <div class="modal-actions">
+        <a class="btn primary" id="modalOpen" target="_blank" rel="noopener">Open Project</a>
+        <button class="btn ghost" id="modalCancel" type="button">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-window.addEventListener("load",()=>document.body.classList.add("loaded"));
+/* page load */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
 
-const reveals=document.querySelectorAll(".reveal");
-const io=new IntersectionObserver(entries=>{
-entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show");});
+/* typing effect */
+const words = ["building daily.", "learning fast.", "creating clean UI.", "shipping projects."];
+let w = 0, i = 0, deleting = false;
+const typed = document.querySelector(".typed");
+function typeLoop(){
+  const word = words[w];
+  if(!deleting){
+    typed.textContent = word.slice(0, i++);
+    if(i > word.length){ deleting = true; setTimeout(typeLoop, 900); return; }
+  }else{
+    typed.textContent = word.slice(0, i--);
+    if(i < 0){ deleting = false; w = (w+1)%words.length; i = 0; }
+  }
+  setTimeout(typeLoop, deleting ? 55 : 85);
+}
+typeLoop();
+
+/* scroll reveal */
+const reveals = document.querySelectorAll(".reveal");
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("show"); });
 },{threshold:0.15});
 reveals.forEach(r=>io.observe(r));
 
-const glow=document.getElementById("glow");
-window.addEventListener("mousemove",(e)=>{
-glow.style.left=e.clientX+"px";
-glow.style.top=e.clientY+"px";
+/* active navbar */
+const sections = document.querySelectorAll("main section");
+const navLinks = document.querySelectorAll("nav a");
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(sec => {
+    const secTop = sec.offsetTop - 140;
+    if (scrollY >= secTop) current = sec.getAttribute("id");
+  });
+  navLinks.forEach(link => {
+    link.style.color = "#cbd5e1";
+    if(link.getAttribute("href") === "#" + current){
+      link.style.color = "#22c55e";
+    }
+  });
 });
 
-document.querySelectorAll(".btn").forEach(btn=>{
-btn.addEventListener("click",function(e){
-const circle=document.createElement("span");
-circle.classList.add("ripple");
-const rect=this.getBoundingClientRect();
-const size=Math.max(rect.width,rect.height);
-circle.style.width=circle.style.height=size+"px";
-circle.style.left=(e.clientX-rect.left-size/2)+"px";
-circle.style.top=(e.clientY-rect.top-size/2)+"px";
-this.appendChild(circle);
-setTimeout(()=>circle.remove(),600);
+/* glow follow */
+const glow = document.getElementById("glow");
+window.addEventListener("mousemove", (e) => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top  = e.clientY + "px";
 });
+window.addEventListener("touchmove", (e) => {
+  const t = e.touches[0];
+  glow.style.left = t.clientX + "px";
+  glow.style.top  = t.clientY + "px";
+}, {passive:true});
+
+/* tilt profile card */
+const profileCard = document.getElementById("tiltCard");
+if(profileCard){
+  profileCard.addEventListener("mousemove", (e) => {
+    const rect = profileCard.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y / rect.height) - 0.5) * -12;
+    const rotateY = ((x / rect.width) - 0.5) * 12;
+    profileCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  profileCard.addEventListener("mouseleave", () => {
+    profileCard.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+}
+
+/* ripple on buttons */
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", function(e){
+    const circle = document.createElement("span");
+    circle.classList.add("ripple");
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    circle.style.width = circle.style.height = size + "px";
+    circle.style.left = (e.clientX - rect.left - size/2) + "px";
+    circle.style.top  = (e.clientY - rect.top - size/2) + "px";
+    this.appendChild(circle);
+    setTimeout(() => circle.remove(), 600);
+  });
+});
+
+/* premium tilt + shine for project cards */
+document.querySelectorAll("#projects .card").forEach(card=>{
+  card.addEventListener("mousemove", (e)=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+
+    const rx = ((y / r.height) - 0.5) * -10;
+    const ry = ((x / r.width)  - 0.5) *  10;
+
+    card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    card.style.setProperty("--mx", (x / r.width) * 100 + "%");
+    card.style.setProperty("--my", (y / r.height) * 100 + "%");
+  });
+
+  card.addEventListener("mouseleave", ()=>{
+    card.style.transform = "";
+  });
+});
+
+/* ===== MODAL + NEXT/PREV ===== */
+const modal = document.getElementById("projectModal");
+const modalClose = document.getElementById("modalClose");
+const modalCancel = document.getElementById("modalCancel");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const modalMeta = document.getElementById("modalMeta");
+const modalOpen = document.getElementById("modalOpen");
+const modalImg = document.getElementById("modalImg");
+const modalFallback = document.getElementById("modalFallback");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const cards = Array.from(document.querySelectorAll("#projects .card"));
+const projects = cards.map(card => {
+  const title = card.querySelector("h3")?.textContent?.trim() || "Project";
+  const desc  = card.querySelector("p")?.textContent?.trim() || "";
+  const tag   = card.querySelector(".tag")?.textContent?.trim() || "";
+  const link  = card.querySelector("a")?.getAttribute("href") || "#";
+  const img   = card.getAttribute("data-img") || "";
+  return { title, desc, tags: [tag, "Live Demo"].filter(Boolean), link, img };
+});
+
+let currentIndex = 0;
+
+function renderModal(p){
+  modalTitle.textContent = p.title || "Project";
+  modalDesc.textContent = p.desc || "";
+  modalOpen.href = p.link || "#";
+
+  modalMeta.innerHTML = "";
+  (p.tags || []).forEach(t=>{
+    const s = document.createElement("span");
+    s.className = "pill";
+    s.textContent = t;
+    modalMeta.appendChild(s);
+  });
+
+  modalImg.onload = () => { modalFallback.style.display = "none"; };
+  modalImg.onerror = () => { modalFallback.style.display = "flex"; };
+
+  if(p.img){
+    modalImg.src = p.img;
+    modalFallback.style.display = "flex";
+  }else{
+    modalImg.src = "";
+    modalFallback.style.display = "flex";
+  }
+}
+
+function openModalAt(index){
+  if(projects.length === 0) return;
+  currentIndex = (index + projects.length) % projects.length;
+  renderModal(projects[currentIndex]);
+
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function nextProject(){ openModalAt(currentIndex + 1); }
+function prevProject(){ openModalAt(currentIndex - 1); }
+
+modalClose.addEventListener("click", closeModal);
+modalCancel.addEventListener("click", closeModal);
+nextBtn.addEventListener("click", nextProject);
+prevBtn.addEventListener("click", prevProject);
+
+/* outside click closes */
+modal.addEventListener("click", (e)=>{
+  if(e.target === modal) closeModal();
+});
+
+/* keyboard: Esc close, Left/Right switch */
+document.addEventListener("keydown", (e)=>{
+  if(!modal.classList.contains("show")) return;
+  if(e.key === "Escape") closeModal();
+  if(e.key === "ArrowRight") nextProject();
+  if(e.key === "ArrowLeft") prevProject();
+});
+
+/* clicking cards opens modal (but clicking the Open button still works normally) */
+cards.forEach((card, idx)=>{
+  card.style.cursor = "pointer";
+  card.addEventListener("click", (e)=>{
+    if(e.target.closest("a") || e.target.closest("button")) return;
+    openModalAt(idx);
+  });
 });
 </script>
 
