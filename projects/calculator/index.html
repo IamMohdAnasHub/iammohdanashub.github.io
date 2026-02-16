@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Calculator UI</title>
+<title>Calculator (Working)</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
@@ -19,6 +19,20 @@ body{
   background:linear-gradient(135deg,#020617,#0f172a);
   color:white;
   padding:30px;
+}
+
+.wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.title{
+  margin:0;
+  font-size:18px;
+  color:#94a3b8;
+  letter-spacing:.5px;
 }
 
 .calc{
@@ -50,6 +64,7 @@ body{
   white-space:nowrap;
   text-overflow:ellipsis;
   overflow:hidden;
+  min-height:18px;
 }
 
 .screen .big{
@@ -78,6 +93,7 @@ body{
   font-weight:600;
   cursor:pointer;
   transition:0.2s;
+  user-select:none;
 }
 
 .btn:hover{
@@ -112,44 +128,196 @@ body{
   background:rgba(239,68,68,0.20);
   border:1px solid rgba(239,68,68,0.45);
 }
+
+.note{
+  font-size:12px;
+  color:#94a3b8;
+  text-align:center;
+  max-width:320px;
+}
+a.back{
+  color:#94a3b8;
+  text-decoration:none;
+  font-size:13px;
+}
+a.back:hover{color:white}
 </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <p class="title">Calculator (Working)</p>
 
-<div class="calc">
-  <div class="screen">
-    <div class="small">12 + 7</div>
-    <div class="big">19</div>
+    <div class="calc">
+      <div class="screen">
+        <div class="small" id="expr"> </div>
+        <div class="big" id="out">0</div>
+      </div>
+
+      <div class="grid">
+        <button class="btn danger" data-action="clear">C</button>
+        <button class="btn" data-action="backspace">⌫</button>
+        <button class="btn op" data-op="%">%</button>
+        <button class="btn op" data-op="/">÷</button>
+
+        <button class="btn" data-num="7">7</button>
+        <button class="btn" data-num="8">8</button>
+        <button class="btn" data-num="9">9</button>
+        <button class="btn op" data-op="*">×</button>
+
+        <button class="btn" data-num="4">4</button>
+        <button class="btn" data-num="5">5</button>
+        <button class="btn" data-num="6">6</button>
+        <button class="btn op" data-op="-">−</button>
+
+        <button class="btn" data-num="1">1</button>
+        <button class="btn" data-num="2">2</button>
+        <button class="btn" data-num="3">3</button>
+        <button class="btn op" data-op="+">+</button>
+
+        <button class="btn" data-num="0">0</button>
+        <button class="btn" data-action="dot">.</button>
+        <button class="btn equal" data-action="equals">=</button>
+      </div>
+    </div>
+
+    <div class="note">Tip: keyboard also works (0-9, + - * /, Enter, Backspace).</div>
+    <a class="back" href="../../index.html">← Back to Portfolio</a>
   </div>
 
-  <div class="grid">
-    <button class="btn danger">C</button>
-    <button class="btn">⌫</button>
-    <button class="btn op">%</button>
-    <button class="btn op">÷</button>
+<script>
+(() => {
+  const exprEl = document.getElementById("expr");
+  const outEl  = document.getElementById("out");
 
-    <button class="btn">7</button>
-    <button class="btn">8</button>
-    <button class="btn">9</button>
-    <button class="btn op">×</button>
+  // State
+  let current = "0";     // number being typed (string)
+  let previous = null;   // previous value (number)
+  let op = null;         // "+", "-", "*", "/", "%"
+  let justEvaluated = false;
 
-    <button class="btn">4</button>
-    <button class="btn">5</button>
-    <button class="btn">6</button>
-    <button class="btn op">−</button>
+  const fmt = (n) => {
+    if (!isFinite(n)) return "Error";
+    // avoid long float noise
+    const s = Number(n.toFixed(12)).toString();
+    return s.length > 14 ? n.toExponential(6) : s;
+  };
 
-    <button class="btn">1</button>
-    <button class="btn">2</button>
-    <button class="btn">3</button>
-    <button class="btn op">+</button>
+  const setOut = (v) => { outEl.textContent = v; };
 
-    <button class="btn">0</button>
-    <button class="btn">.</button>
-    <button class="btn equal">=</button>
-  </div>
-</div>
+  const setExpr = () => {
+    if (op && previous !== null) {
+      const sym = (op === "*") ? "×" : (op === "/") ? "÷" : op;
+      exprEl.textContent = `${fmt(previous)} ${sym}`;
+    } else {
+      exprEl.textContent = "";
+    }
+  };
+
+  const inputNum = (d) => {
+    if (justEvaluated) { current = "0"; justEvaluated = false; op = null; previous = null; }
+    if (current === "0") current = d;
+    else if (current.length < 16) current += d;
+    setOut(current);
+  };
+
+  const inputDot = () => {
+    if (justEvaluated) { current = "0"; justEvaluated = false; op = null; previous = null; }
+    if (!current.includes(".")) current += ".";
+    setOut(current);
+  };
+
+  const clearAll = () => {
+    current = "0";
+    previous = null;
+    op = null;
+    justEvaluated = false;
+    setOut("0");
+    exprEl.textContent = "";
+  };
+
+  const backspace = () => {
+    if (justEvaluated) return; // keep result stable
+    if (current.length <= 1) current = "0";
+    else current = current.slice(0, -1);
+    setOut(current);
+  };
+
+  const compute = (a, b, operator) => {
+    switch (operator) {
+      case "+": return a + b;
+      case "-": return a - b;
+      case "*": return a * b;
+      case "/": return b === 0 ? NaN : a / b;
+      case "%": return a % b;
+      default: return b;
+    }
+  };
+
+  const chooseOp = (nextOp) => {
+    const curNum = parseFloat(current);
+
+    if (previous === null) {
+      previous = curNum;
+    } else if (op && !justEvaluated) {
+      previous = compute(previous, curNum, op);
+      setOut(fmt(previous));
+    }
+
+    op = nextOp;
+    current = "0";
+    justEvaluated = false;
+    setExpr();
+  };
+
+  const equals = () => {
+    if (op === null || previous === null) return;
+    const curNum = parseFloat(current);
+    const result = compute(previous, curNum, op);
+
+    setExpr();
+    setOut(fmt(result));
+
+    // prepare for next input
+    current = fmt(result);
+    previous = null;
+    op = null;
+    justEvaluated = true;
+    exprEl.textContent = "";
+  };
+
+  // Button clicks
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const num = btn.getAttribute("data-num");
+    const oper = btn.getAttribute("data-op");
+    const action = btn.getAttribute("data-action");
+
+    if (num !== null) inputNum(num);
+    else if (oper !== null) chooseOp(oper);
+    else if (action === "dot") inputDot();
+    else if (action === "clear") clearAll();
+    else if (action === "backspace") backspace();
+    else if (action === "equals") equals();
+  });
+
+  // Keyboard support
+  document.addEventListener("keydown", (e) => {
+    const k = e.key;
+    if (k >= "0" && k <= "9") return inputNum(k);
+    if (k === ".") return inputDot();
+    if (k === "Backspace") return backspace();
+    if (k === "Escape") return clearAll();
+    if (k === "Enter" || k === "=") { e.preventDefault(); return equals(); }
+    if (k === "+" || k === "-" || k === "*" || k === "/" || k === "%") return chooseOp(k);
+  });
+
+  // init
+  clearAll();
+})();
+</script>
 
 </body>
 </html>
-
