@@ -16,6 +16,14 @@ background:linear-gradient(-45deg,#020617,#0f172a,#020617);
 background-size:400% 400%;
 animation:bg 14s ease infinite;
 color:white;
+opacity:0;
+transform:translateY(10px);
+transition:opacity .7s ease, transform .7s ease;
+}
+  
+body.loaded{
+  opacity:1;
+  transform:translateY(0);
 }
 
 @keyframes bg{
@@ -88,6 +96,8 @@ color:white;
 background:linear-gradient(45deg,#22c55e,#16a34a);
 box-shadow:0 15px 30px rgba(34,197,94,.3);
 transition:.3s;
+position:relative;
+overflow:hidden;
 }
 
 .btn:hover{
@@ -117,6 +127,9 @@ padding:25px;
 border-radius:18px;
 backdrop-filter:blur(10px);
 transition:.3s;
+transform-style:preserve-3d;
+will-change:transform;
+transition:transform .15s ease;
 }
 .card:hover{
 transform:translateY(-6px);
@@ -199,7 +212,23 @@ border-top:1px solid rgba(255,255,255,.08);
 
 body, nav, section, .hero, footer{position:relative; z-index:1;}
   
+/* ripple effect */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  transform:scale(0);
+  background:rgba(255,255,255,.35);
+  animation:ripple .6s linear;
+  pointer-events:none;
+}
 
+@keyframes ripple{
+  to{
+    transform:scale(4);
+    opacity:0;
+  }
+  }
+                            
 </style>
 </head>
 
@@ -223,17 +252,17 @@ body, nav, section, .hero, footer{position:relative; z-index:1;}
 <section id="services" class="reveal">
 <h2>Services</h2>
 <div class="grid">
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Portfolio Website</h3>
 <p>Clean personal portfolio for creators & professionals.</p>
 </div>
 
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Landing Page</h3>
 <p>Modern one-page website for products or services.</p>
 </div>
 
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Business Website</h3>
 <p>Professional online presence for small businesses.</p>
 </div>
@@ -244,19 +273,19 @@ body, nav, section, .hero, footer{position:relative; z-index:1;}
 <h2>Pricing</h2>
 <div class="grid">
 
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Starter</h3>
 <div class="price">₹999</div>
 <p>Single page website</p>
 </div>
 
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Professional</h3>
 <div class="price">₹1999</div>
 <p>Multi-section modern website</p>
 </div>
 
-<div class="card">
+<div class="card" id="tiltCard">
 <h3>Premium</h3>
 <div class="price">₹2999</div>
 <p>Full custom website + animation</p>
@@ -342,7 +371,53 @@ window.addEventListener("touchmove", (e) => {
   glow.style.left = t.clientX + "px";
   glow.style.top  = t.clientY + "px";
 }, {passive:true});
-  
+
+  /* card tilt effect */
+const card = document.getElementById("tiltCard");
+
+if(card){
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = ((y / rect.height) - 0.5) * -12;
+    const rotateY = ((x / rect.width) - 0.5) * 12;
+
+    card.style.transform =
+      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+}
+
+  /* page load animation */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+/* button ripple */
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", function(e){
+
+    const circle = document.createElement("span");
+    circle.classList.add("ripple");
+
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+
+    circle.style.width = circle.style.height = size + "px";
+    circle.style.left = (e.clientX - rect.left - size/2) + "px";
+    circle.style.top  = (e.clientY - rect.top - size/2) + "px";
+
+    this.appendChild(circle);
+
+    setTimeout(() => circle.remove(), 600);
+  });
+});
+
+
 </script>
   
 
