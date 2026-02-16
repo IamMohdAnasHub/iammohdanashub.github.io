@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Calculator (Working)</title>
+<title>Calculator (Perfect)</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-
 *{box-sizing:border-box;font-family:Poppins}
 
 body{
@@ -100,29 +99,20 @@ body{
   transform:translateY(-2px);
   background:rgba(255,255,255,0.10);
 }
-
-.btn:active{
-  transform:scale(0.97);
-}
+.btn:active{ transform:scale(0.97); }
 
 .op{
   background:rgba(34,197,94,0.18);
   border:1px solid rgba(34,197,94,0.45);
 }
-
-.op:hover{
-  background:rgba(34,197,94,0.28);
-}
+.op:hover{ background:rgba(34,197,94,0.28); }
 
 .equal{
   grid-column: span 2;
   background:linear-gradient(45deg,#22c55e,#16a34a);
   border:none;
 }
-
-.equal:hover{
-  filter:brightness(1.05);
-}
+.equal:hover{ filter:brightness(1.05); }
 
 .danger{
   background:rgba(239,68,68,0.20);
@@ -136,6 +126,7 @@ body{
   max-width:320px;
 }
 
+/* History */
 .history{
   width:320px;
   margin-top:12px;
@@ -146,13 +137,37 @@ body{
   backdrop-filter:blur(10px);
 }
 
-.history h4{
-  margin:0 0 10px;
+.history-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.history-head h4{
+  margin:0;
   font-size:14px;
   color:#cbd5e1;
   font-weight:700;
   letter-spacing:.3px;
 }
+
+.clear-hist{
+  padding:6px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.06);
+  color:#e2e8f0;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.clear-hist:hover{
+  background:rgba(255,255,255,0.10);
+  transform:translateY(-1px);
+}
+.clear-hist:active{ transform:scale(0.98); }
 
 .history ul{
   margin:0;
@@ -163,17 +178,37 @@ body{
   gap:6px;
 }
 
+/* clickable history items */
 .history li{
+  cursor:pointer;
+  padding:6px 8px;
+  border-radius:10px;
+  transition:.2s;
   font-size:13px;
   color:#94a3b8;
   display:flex;
   justify-content:space-between;
   gap:10px;
 }
+.history li:hover{ background:rgba(255,255,255,0.06); }
+.history li:active{ transform:scale(0.99); }
 
-.history li span:last-child{
+.history .exp{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.history .res{
   color:#e2e8f0;
-  font-weight:600;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:10px;
+  background:rgba(34,197,94,0.12);
+  border:1px solid rgba(34,197,94,0.25);
+}
+.history .res:hover{
+  background:rgba(34,197,94,0.18);
 }
 
 a.back{
@@ -187,7 +222,7 @@ a.back:hover{color:white}
 
 <body>
   <div class="wrap">
-    <p class="title">Calculator (Working)</p>
+    <p class="title">Calculator (Perfect)</p>
 
     <div class="calc">
       <div class="screen">
@@ -198,7 +233,7 @@ a.back:hover{color:white}
       <div class="grid">
         <button class="btn danger" data-action="clear">C</button>
         <button class="btn" data-action="backspace">⌫</button>
-        <button class="btn op" data-op="%">%</button>
+        <button class="btn" data-action="neg">±</button>
         <button class="btn op" data-op="/">÷</button>
 
         <button class="btn" data-num="7">7</button>
@@ -217,17 +252,24 @@ a.back:hover{color:white}
         <button class="btn op" data-op="+">+</button>
 
         <button class="btn" data-num="0">0</button>
-        <button class="btn" data-action="dot">.</button>
+        <button class="btn op" data-op="%">%</button>
         <button class="btn equal" data-action="equals">=</button>
       </div>
     </div>
 
     <div class="history">
-      <h4>History (last 5)</h4>
+      <div class="history-head">
+        <h4>History (last 5)</h4>
+        <button class="clear-hist" id="clearHistoryBtn">Clear</button>
+      </div>
       <ul id="historyList"></ul>
     </div>
 
-    <div class="note">Tip: keyboard works (0-9, + - * / %, Enter, Backspace, Esc).</div>
+    <div class="note">
+      Tap a history line = edit that calculation. Tap the green result = reuse result. <br/>
+      Keyboard: 0-9, + - * / %, Enter, Backspace, Esc. (Press "n" for ±)
+    </div>
+
     <a class="back" href="../../index.html">← Back to Portfolio</a>
   </div>
 
@@ -236,15 +278,15 @@ a.back:hover{color:white}
   const exprEl = document.getElementById("expr");
   const outEl  = document.getElementById("out");
   const historyList = document.getElementById("historyList");
+  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
-  // State
   let current = "0";
   let previous = null;
   let op = null;
   let justEvaluated = false;
 
-  // History store
-  const history = []; // {exp, res}
+  // History: { expText, resText, prevNum, opChar, curStr }
+  const history = [];
 
   const opSymbol = (o) => (o === "*") ? "×" : (o === "/") ? "÷" : o;
 
@@ -256,7 +298,6 @@ a.back:hover{color:white}
 
   const setOut = (v) => { outEl.textContent = v; };
 
-  // Live expression like: 12 + 7
   const setExpr = () => {
     if (op && previous !== null) {
       const sym = opSymbol(op);
@@ -271,34 +312,74 @@ a.back:hover{color:white}
     historyList.innerHTML = "";
     if (history.length === 0) {
       const li = document.createElement("li");
-      li.innerHTML = `<span style="color:#94a3b8">No history yet</span><span></span>`;
+      li.style.cursor = "default";
+      li.innerHTML = `<span class="exp" style="color:#94a3b8">No history yet</span><span></span>`;
       historyList.appendChild(li);
       return;
     }
+
     history.slice(0,5).forEach(item => {
       const li = document.createElement("li");
-      li.innerHTML = `<span>${item.exp}</span><span>${item.res}</span>`;
+
+      const expSpan = document.createElement("span");
+      expSpan.className = "exp";
+      expSpan.textContent = item.expText;
+
+      const resSpan = document.createElement("span");
+      resSpan.className = "res";
+      resSpan.textContent = item.resText;
+
+      // Tap line: load full calc for editing
+      li.addEventListener("click", () => {
+        previous = item.prevNum;
+        op = item.opChar;
+        current = item.curStr;
+        justEvaluated = false;
+        setOut(current);
+        setExpr();
+      });
+
+      // Tap result: reuse result
+      resSpan.addEventListener("click", (e) => {
+        e.stopPropagation();
+        current = item.resText;
+        previous = null;
+        op = null;
+        justEvaluated = false;
+        exprEl.textContent = "";
+        setOut(current);
+      });
+
+      li.appendChild(expSpan);
+      li.appendChild(resSpan);
       historyList.appendChild(li);
     });
   };
 
-  const addHistory = (exp, res) => {
-    history.unshift({exp, res}); // newest on top
+  const addHistory = (prevNum, opChar, curStr, resText) => {
+    const expText = `${fmt(prevNum)} ${opSymbol(opChar)} ${curStr}`;
+    history.unshift({ expText, resText, prevNum, opChar, curStr });
     if (history.length > 5) history.length = 5;
     renderHistory();
   };
 
   const inputNum = (d) => {
-    if (justEvaluated) { current = "0"; justEvaluated = false; op = null; previous = null; }
+    if (justEvaluated) {
+      current = "0";
+      justEvaluated = false;
+      op = null;
+      previous = null;
+      exprEl.textContent = "";
+    }
     if (current === "0") current = d;
     else if (current.length < 16) current += d;
     setOut(current);
     setExpr();
   };
 
-  const inputDot = () => {
-    if (justEvaluated) { current = "0"; justEvaluated = false; op = null; previous = null; }
-    if (!current.includes(".")) current += ".";
+  const toggleNeg = () => {
+    if (current === "0") return;
+    current = current.startsWith("-") ? current.slice(1) : ("-" + current);
     setOut(current);
     setExpr();
   };
@@ -312,10 +393,33 @@ a.back:hover{color:white}
     exprEl.textContent = "";
   };
 
+  const clearHistory = () => {
+    history.length = 0;
+    renderHistory();
+  };
+
   const backspace = () => {
     if (justEvaluated) return;
     if (current.length <= 1) current = "0";
     else current = current.slice(0, -1);
+    if (current === "-") current = "0";
+    setOut(current);
+    setExpr();
+  };
+
+  // Percent like real calculators:
+  // If previous & op exists: current becomes percent of previous (prev * current/100)
+  // Else: current becomes current/100
+  const applyPercent = () => {
+    const curNum = parseFloat(current);
+    if (!isFinite(curNum)) return;
+
+    if (previous !== null && op !== null) {
+      const p = previous * (curNum / 100);
+      current = fmt(p);
+    } else {
+      current = fmt(curNum / 100);
+    }
     setOut(current);
     setExpr();
   };
@@ -326,12 +430,16 @@ a.back:hover{color:white}
       case "-": return a - b;
       case "*": return a * b;
       case "/": return b === 0 ? NaN : a / b;
-      case "%": return a % b;
       default: return b;
     }
   };
 
   const chooseOp = (nextOp) => {
+    if (nextOp === "%") {
+      applyPercent();
+      return;
+    }
+
     const curNum = parseFloat(current);
 
     if (previous === null) {
@@ -351,14 +459,17 @@ a.back:hover{color:white}
     if (op === null || previous === null) return;
 
     const curNum = parseFloat(current);
-    const expText = `${fmt(previous)} ${opSymbol(op)} ${current}`;
-    const result = compute(previous, curNum, op);
+    const prevNum = previous;
+    const opChar = op;
+    const curStr = current;
 
-    setOut(fmt(result));
-    addHistory(expText, fmt(result));
+    const result = compute(prevNum, curNum, opChar);
+    const resText = fmt(result);
 
-    // reset state
-    current = fmt(result);
+    setOut(resText);
+    addHistory(prevNum, opChar, curStr, resText);
+
+    current = resText;
     previous = null;
     op = null;
     justEvaluated = true;
@@ -376,24 +487,27 @@ a.back:hover{color:white}
 
     if (num !== null) inputNum(num);
     else if (oper !== null) chooseOp(oper);
-    else if (action === "dot") inputDot();
+    else if (action === "neg") toggleNeg();
     else if (action === "clear") clearAll();
     else if (action === "backspace") backspace();
     else if (action === "equals") equals();
   });
 
-  // Keyboard support
+  clearHistoryBtn.addEventListener("click", clearHistory);
+
+  // Keyboard
   document.addEventListener("keydown", (e) => {
     const k = e.key;
     if (k >= "0" && k <= "9") return inputNum(k);
-    if (k === ".") return inputDot();
     if (k === "Backspace") return backspace();
     if (k === "Escape") return clearAll();
     if (k === "Enter" || k === "=") { e.preventDefault(); return equals(); }
-    if (k === "+" || k === "-" || k === "*" || k === "/" || k === "%") return chooseOp(k);
+    if (k === "+" || k === "-" || k === "*" || k === "/") return chooseOp(k);
+    if (k === "%") return chooseOp("%");
+    if (k === "n" || k === "N") return toggleNeg();
   });
 
-  // init
+  // Init
   renderHistory();
   clearAll();
 })();
