@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iammohdanashub.github.io/sitemap.xml
