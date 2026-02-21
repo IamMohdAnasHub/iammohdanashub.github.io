@@ -7,9 +7,7 @@
 <title>Mohd Anas Khan | Web Developer Portfolio</title>
 
 <meta name="description" content="Mohd Anas Khan — Web Developer Portfolio. Clean UI design, real projects, modern websites using HTML, CSS and JavaScript. Learning daily and building real projects." />
-
 <meta name="keywords" content="Mohd Anas Khan, IamMohdAnas, web developer portfolio, HTML CSS JavaScript projects, UI design, front end developer" />
-
 <meta name="author" content="Mohd Anas Khan" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#020617" />
@@ -17,22 +15,22 @@
 <link rel="canonical" href="https://iammohdanashub.github.io/" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png" />
 
 <!-- Open Graph -->
-<meta property="og:title" content="Mohd Anas Khan | Web Developer Portfolio">
-<meta property="og:description" content="Clean UI, real projects & modern websites. HTML • CSS • JavaScript.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://iammohdanashub.github.io/">
-<meta property="og:image" content="https://iammohdanashub.github.io/og-image.png">
+<meta property="og:title" content="Mohd Anas Khan | Web Developer Portfolio" />
+<meta property="og:description" content="Clean UI, real projects & modern websites. HTML • CSS • JavaScript." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://iammohdanashub.github.io/" />
+<meta property="og:image" content="https://iammohdanashub.github.io/og-image.png" />
 
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mohd Anas Khan | Web Developer Portfolio">
-<meta name="twitter:description" content="Clean UI, real projects & modern websites.">
-<meta name="twitter:image" content="https://iammohdanashub.github.io/og-image.png">
-  
-  <script type="application/ld+json">
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Mohd Anas Khan | Web Developer Portfolio" />
+<meta name="twitter:description" content="Clean UI, real projects & modern websites." />
+<meta name="twitter:image" content="https://iammohdanashub.github.io/og-image.png" />
+
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -46,12 +44,12 @@
   "jobTitle": "Front-End Web Developer",
   "knowsAbout": ["HTML", "CSS", "JavaScript", "UI Design", "Responsive Web Design"]
 }
-  </script>
-  
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
-*{box-sizing:border-box;font-family:Poppins;scroll-behavior:smooth}
+*{box-sizing:border-box;font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;scroll-behavior:smooth}
 :root{
   --bg1:#020617;
   --bg2:#0f172a;
@@ -60,6 +58,15 @@
   --glass:rgba(255,255,255,.06);
   --border:rgba(255,255,255,.12);
   --green:#22c55e;
+}
+
+body.light{
+  --bg1:#f8fafc;
+  --bg2:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --glass:rgba(0,0,0,.04);
+  --border:rgba(0,0,0,.10);
 }
 
 body{
@@ -71,13 +78,17 @@ body{
   overflow-x:hidden;
 }
 
+body.light{
+  background:linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg1),#eef2ff);
+}
+
 @keyframes bg{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
 
-/* ===== ULTRA PERSONAL LOADER ===== */
+/* ===== LOADER ===== */
 .loader{
   position:fixed;
   inset:0;
@@ -89,6 +100,7 @@ body{
   backdrop-filter:blur(14px);
   transition:opacity .5s ease, transform .5s ease;
 }
+body.light .loader{ background:rgba(248,250,252,.92); }
 .loader.hide{
   opacity:0;
   transform:scale(1.03);
@@ -101,6 +113,11 @@ body{
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+body.light .loader-box{
+  background:rgba(0,0,0,.03);
+  border:1px solid rgba(0,0,0,.10);
+  box-shadow:0 25px 70px rgba(0,0,0,.10);
 }
 .loader-avatar-wrap{
   position:relative;
@@ -127,13 +144,12 @@ body{
 .loader-text{
   font-weight:700;
   font-size:18px;
-  color:#e2e8f0;
   letter-spacing:.4px;
 }
 .loader-sub{
   margin-top:4px;
   font-size:13px;
-  color:#94a3b8;
+  color:var(--muted);
 }
 @keyframes spin{
   from{transform:rotate(0deg)}
@@ -162,6 +178,7 @@ body{
   left:50%;top:50%;
   z-index:1;
 }
+body.light .glow{ background:rgba(59,130,246,.14); }
 
 /* Keep content above */
 .wrap{position:relative;z-index:2}
@@ -175,21 +192,41 @@ nav{
   backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
+body.light nav{
+  background:rgba(255,255,255,.60);
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
 .nav-inner{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 0;
+  gap:12px;
 }
 .brand{
   display:flex;align-items:center;gap:10px;
   font-weight:700;letter-spacing:.4px;
+  white-space:nowrap;
 }
 .dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(34,197,94,.45)}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 nav a{
-  color:#cbd5e1;text-decoration:none;font-weight:500;
-  margin-left:16px;
+  color:var(--muted);
+  text-decoration:none;font-weight:600;
+  margin-left:14px;
   transition:.25s;
 }
-nav a:hover{color:white}
+nav a:hover{color:var(--text)}
+
+/* Theme toggle */
+.themeBtn{
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:var(--text);
+  border-radius:12px;
+  padding:9px 12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.themeBtn:hover{ transform:translateY(-2px); }
 
 /* Hero */
 .hero{
@@ -208,6 +245,8 @@ nav a:hover{color:white}
   color:#bbf7d0;
   font-size:13px;
 }
+body.light .kicker{ color:#14532d; }
+
 h1{
   margin:14px 0 10px;
   font-size:54px;
@@ -231,18 +270,17 @@ h1{
   text-decoration:none;font-weight:700;
   transition:.25s;
   position:relative;overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:var(--text);
 }
 .btn.primary{
+  border:none;
   background:linear-gradient(45deg,var(--green),#16a34a);
   color:white;
   box-shadow:0 18px 40px rgba(34,197,94,.18);
 }
 .btn.primary:hover{transform:translateY(-3px) scale(1.02); box-shadow:0 20px 35px rgba(34,197,94,.4);}
-.btn.ghost{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.14);
-  color:var(--text);
-}
 .btn.ghost:hover{transform:translateY(-3px)}
 .btn.small{padding:10px 14px;border-radius:12px;font-size:13px}
 
@@ -253,7 +291,7 @@ h1{
 .stat{
   padding:12px 14px;border-radius:16px;
   background:var(--glass);
-  border:1px solid rgba(255,255,255,.10);
+  border:1px solid var(--border);
   backdrop-filter:blur(10px);
 }
 .stat b{display:block;font-size:16px}
@@ -269,11 +307,12 @@ h1{
   box-shadow:0 25px 70px rgba(0,0,0,.45);
   position:relative;
   overflow:hidden;
-
   transform-style:preserve-3d;
   will-change:transform;
   transition:transform .15s ease;
 }
+body.light .profile{ box-shadow:0 25px 70px rgba(0,0,0,.10); }
+
 .profile::before{
   content:"";
   position:absolute;
@@ -299,6 +338,7 @@ h1{
   border:1px solid rgba(34,197,94,.22);
   color:#bbf7d0;
 }
+body.light .badges span{ color:#14532d; }
 .p-note{margin-top:14px;color:var(--muted);line-height:1.7;position:relative;z-index:2;font-size:14px}
 .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:2}
 
@@ -307,95 +347,108 @@ section{padding:90px 0}
 .section-title{margin:0 0 8px;font-size:30px}
 .section-sub{margin:0;color:var(--muted);line-height:1.7}
 
-/* Project grid */
+/* Project grids */
 .grid{
-  margin-top:26px;
+  margin-top:22px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
+  gap:16px;
 }
 
-/* ===== SUPER PREMIUM PROJECT CARDS ===== */
-.card{
+/* Featured cards */
+.pCard{
+  text-decoration:none;
+  color:var(--text);
   background:var(--glass);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:20px;
-  padding:20px;
-  backdrop-filter:blur(10px);
-  transition:.25s;
-
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:18px;
   position:relative;
   overflow:hidden;
-  transform-style:preserve-3d;
-  will-change:transform;
+  transition:.25s;
+  display:block;
 }
-.card h3{margin:0 0 6px}
-.card p{margin:0;color:var(--muted);line-height:1.6}
-
-.card::before{
+.pCard:hover{ transform:translateY(-6px); }
+.pCard::before{
   content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:22px;
-  background:linear-gradient(135deg, rgba(34,197,94,.65), rgba(59,130,246,.45), rgba(34,197,94,.35));
-  opacity:0;
-  filter:blur(6px);
-  transition:opacity .25s ease;
-  z-index:0;
+  position:absolute; inset:-2px;
+  border-radius:24px;
+  background:linear-gradient(135deg, rgba(34,197,94,.55), rgba(59,130,246,.35), rgba(34,197,94,.25));
+  opacity:0; filter:blur(10px);
+  transition:opacity .25s;
 }
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:20px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.10);
-  z-index:1;
-}
-.card > *{ position:relative; z-index:2; }
-.card:hover::before{ opacity:1; }
+.pCard:hover::before{ opacity:1; }
+.pCard > *{ position:relative; z-index:2; }
 
-.card .row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.pTop{ display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:10px; }
+.pBadge{
+  font-size:12px; font-weight:800;
+  padding:6px 10px; border-radius:999px;
+  background:rgba(34,197,94,.14);
+  border:1px solid rgba(34,197,94,.25);
+  color:#bbf7d0;
+}
+body.light .pBadge{ color:#14532d; }
+.pTag{
+  font-size:12px;
+  padding:6px 10px; border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+
+.pCard h3{ margin:0 0 8px; }
+.pCard p{ margin:0; color:var(--muted); line-height:1.65; }
+.pBtn{
   margin-top:14px;
-  gap:10px;
+  display:inline-flex;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:800;
+  background:linear-gradient(45deg,var(--green),#16a34a);
+  color:white;
+  box-shadow:0 16px 35px rgba(34,197,94,.18);
 }
-.tag{
-  font-size:12px;color:#bbf7d0;
+
+/* Mini cards */
+.mCard{
+  text-decoration:none;
+  color:var(--text);
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  transition:.25s;
+  display:block;
+}
+.mCard:hover{ transform:translateY(-5px); }
+.mCard h3{ margin:0 0 8px; font-size:18px; }
+.mCard p{ margin:0; color:var(--muted); line-height:1.65; }
+.mTag{
+  display:inline-flex;
+  margin-top:12px;
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
   background:rgba(34,197,94,.12);
   border:1px solid rgba(34,197,94,.22);
-  padding:6px 10px;border-radius:999px;
+  color:#bbf7d0;
 }
+body.light .mTag{ color:#14532d; }
 
-/* shine */
-.card .shine{
-  position:absolute;
-  inset:-60px;
-  background:radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.18), transparent 45%);
-  opacity:0;
-  transition:opacity .2s ease;
-  z-index:2;
-  pointer-events:none;
-}
-.card:hover .shine{ opacity:1; }
-
-/* reveal */
+/* Reveal */
 .reveal{opacity:0;transform:translateY(22px);transition:.7s ease;}
 .reveal.show{opacity:1;transform:translateY(0);}
 
-/* typing cursor */
-.typed::after{
-  content:"|";
-  margin-left:6px;
-  animation:blink .8s infinite;
-  color:#22c55e;
+/* Ripple */
+.ripple{
+  position:absolute;border-radius:50%;
+  transform:scale(0);
+  background:rgba(255,255,255,.35);
+  animation:ripple .6s linear;
+  pointer-events:none;
 }
-@keyframes blink{
-  0%,50%{opacity:1}
-  51%,100%{opacity:0}
-}
+@keyframes ripple{ to{transform:scale(4);opacity:0;} }
 
 /* Footer */
 footer{
@@ -406,229 +459,20 @@ footer{
   opacity:.9;
   font-size:14px;
 }
-
-/* Ripple */
-.ripple{
-  position:absolute;border-radius:50%;
-  transform:scale(0);
-  background:rgba(255,255,255,.35);
-  animation:ripple .6s linear;
-  pointer-events:none;
-}
-@keyframes ripple{
-  to{transform:scale(4);opacity:0;}
-}
-
-/* ===== PROJECT MODAL (ULTRA PREMIUM) ===== */
-.modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(2,6,23,.65);
-  backdrop-filter:blur(10px);
-  z-index:999;
-}
-.modal.show{ display:flex; }
-
-.modal-box{
-  width:min(620px, 100%);
-  border-radius:22px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 30px 90px rgba(0,0,0,.55);
-  overflow:hidden;
-  position:relative;
-
-  transform:translateY(10px) scale(.98);
-  opacity:0;
-  transition:transform .25s ease, opacity .25s ease;
-}
-.modal.show .modal-box{
-  transform:translateY(0) scale(1);
-  opacity:1;
-}
-
-.modal-top{
-  padding:16px 16px 10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-.modal-title{
-  margin:0;
-  font-size:18px;
-  font-weight:700;
-}
-.modal-nav{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-.icon-btn{
-  border:none;
-  background:rgba(255,255,255,.08);
-  color:#e2e8f0;
-  width:38px;height:38px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.2s;
-}
-.icon-btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.12); }
-.icon-btn:active{ transform:scale(.98); }
-#playPauseBtn{ font-size:16px; }
-
-.modal-body{
-  padding:14px 16px 18px;
-  transition:transform .18s ease, opacity .18s ease;
-}
-.modal-body.slide-left{ transform:translateX(-14px); opacity:.85; }
-.modal-body.slide-right{ transform:translateX(14px); opacity:.85; }
-
-.modal-desc{
-  margin:0;
-  color:#94a3b8;
-  line-height:1.7;
-}
-.modal-meta{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-.modal-meta .pill{
-  font-size:12px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.22);
-  color:#bbf7d0;
-}
-.modal-actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:16px;
-}
-
-/* thumbnail */
-.modal-thumb{
-  width:100%;
-  height:220px;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  position:relative;
-  margin:10px 0 14px;
-}
-.modal-thumb::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:linear-gradient(135deg, rgba(34,197,94,.55), rgba(59,130,246,.35), rgba(34,197,94,.25));
-  filter:blur(10px);
-  opacity:.55;
-  z-index:0;
-}
-.modal-thumb img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:1;
-}
-.modal-thumb .fallback{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#94a3b8;
-  font-weight:700;
-  letter-spacing:.5px;
-  text-align:center;
-  padding:18px;
-  background:rgba(2,6,23,.25);
-}
-
-/* progress + dots */
-.modal-progress{
-  height:6px;
-  width:100%;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.10);
-  margin-top:10px;
-}
-.modal-progress > div{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg, rgba(34,197,94,.9), rgba(59,130,246,.55));
-  transition:width .25s ease;
-}
-.modal-dots{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-top:10px;
-}
-.dots{
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-.dots span{
-  width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.12);
-  cursor:pointer;
-}
-.dots span.active{
-  background:rgba(34,197,94,.9);
-  border-color:rgba(34,197,94,.6);
-  box-shadow:0 0 14px rgba(34,197,94,.35);
-}
-.counter{
-  font-size:12px;
-  color:#94a3b8;
-  user-select:none;
-}
-
-/* confetti */
-.confetti{
-  position:fixed;
-  width:8px;
-  height:12px;
-  border-radius:2px;
-  pointer-events:none;
-  z-index:2000;
-  opacity:.95;
-  animation:fall 900ms ease-out forwards;
-}
-@keyframes fall{
-  0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1;}
-  100%{transform:translate(var(--x), var(--y)) rotate(540deg) scale(.6);opacity:0;}
-}
+body.light footer{ border-top:1px solid rgba(0,0,0,.08); }
 
 /* Mobile */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;text-align:center;padding-top:120px}
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:130px}
   .sub{margin:0 auto}
   .cta{justify-content:center}
   .stats{justify-content:center}
   h1{font-size:40px}
   .p-top{justify-content:center}
   .links{justify-content:center}
+  .nav-inner{flex-wrap:wrap; justify-content:center}
+  .nav-right{justify-content:center}
+  nav a{margin-left:10px}
 }
 </style>
 </head>
@@ -657,10 +501,16 @@ footer{
   <nav>
     <div class="container nav-inner">
       <div class="brand"><span class="dot"></span> Mohd Anas Khan</div>
-      <div>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+
+      <div class="nav-right">
+        <div>
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <!-- Theme toggle (default dark) -->
+        <button class="themeBtn" id="themeBtn" type="button" aria-label="Toggle theme">☀️</button>
       </div>
     </div>
   </nav>
@@ -670,9 +520,10 @@ footer{
       <span class="kicker">Portfolio • HTML • CSS • JS</span>
       <h1>Build your <span class="grad">digital identity</span> with clean design.</h1>
 
-       <p class="sub">
-       Web Developer from India. I build clean, modern and responsive websites using HTML, CSS and JavaScript. Real projects, real progress — learning and improving every day.
-       </p>
+      <p class="sub">
+        Web Developer from India. I build clean, modern and responsive websites using HTML, CSS and JavaScript.
+        Real projects, real progress — learning and improving every day.
+      </p>
 
       <div class="cta">
         <a class="btn primary" href="#projects">View Projects</a>
@@ -680,7 +531,7 @@ footer{
       </div>
 
       <div class="stats">
-        <div class="stat"><b>Projects</b><span>4+ built</span></div>
+        <div class="stat"><b>Projects</b><span>9 built</span></div>
         <div class="stat"><b>Skills</b><span>HTML • CSS • JS</span></div>
         <div class="stat"><b>Focus</b><span>Clean & professional</span></div>
       </div>
@@ -698,7 +549,7 @@ footer{
       <div class="badges">
         <span>Web Dev</span>
         <span>UI Design</span>
-        <span>Projects</span>
+        <span>Client Demos</span>
         <span>Learning Daily</span>
       </div>
 
@@ -714,57 +565,84 @@ footer{
 
   <main class="container">
     <section id="projects" class="reveal">
-      <h2 class="section-title">Projects</h2>
-      <p class="section-sub">These are my live builds — updated step by step.</p>
+      <h2 class="section-title">Client Demos (Featured)</h2>
+      <p class="section-sub">Premium demo sites — best for showing to clients.</p>
 
       <div class="grid">
-        <div class="card" data-img="client-portfolio.png">
-          <div class="shine"></div>
+        <a class="pCard" href="https://iammohdanashub.github.io/gym-demo/" target="_blank" rel="noopener">
+          <div class="pTop"><span class="pBadge">Featured</span><span class="pTag">Gym</span></div>
+          <h3>Iron Beast Gym</h3>
+          <p>Modern gym site — plans, trainers, reviews & WhatsApp CTA.</p>
+          <div class="pBtn">Open Demo →</div>
+        </a>
+
+        <a class="pCard" href="https://iammohdanashub.github.io/restaurant-demo/" target="_blank" rel="noopener">
+          <div class="pTop"><span class="pBadge">Featured</span><span class="pTag">Restaurant</span></div>
+          <h3>Restaurant Demo</h3>
+          <p>Menu + gallery + reservation style layout — premium UI.</p>
+          <div class="pBtn">Open Demo →</div>
+        </a>
+
+        <a class="pCard" href="https://iammohdanashub.github.io/real-estate-demo/" target="_blank" rel="noopener">
+          <div class="pTop"><span class="pBadge">Featured</span><span class="pTag">Real Estate</span></div>
+          <h3>Real Estate Demo</h3>
+          <p>Listings style UI — agent vibe, modern sections & CTA.</p>
+          <div class="pBtn">Open Demo →</div>
+        </a>
+
+        <a class="pCard" href="https://iammohdanashub.github.io/coaching-demo/" target="_blank" rel="noopener">
+          <div class="pTop"><span class="pBadge">Featured</span><span class="pTag">Coaching</span></div>
+          <h3>Coaching Demo</h3>
+          <p>9–12 coaching landing — batches, results, contact CTA.</p>
+          <div class="pBtn">Open Demo →</div>
+        </a>
+
+        <a class="pCard" href="https://iammohdanashub.github.io/salon-demo/" target="_blank" rel="noopener">
+          <div class="pTop"><span class="pBadge">Featured</span><span class="pTag">Salon</span></div>
+          <h3>Salon Demo</h3>
+          <p>Salon layout — services, gallery, booking CTA.</p>
+          <div class="pBtn">Open Demo →</div>
+        </a>
+      </div>
+
+      <div style="height:26px"></div>
+
+      <h2 class="section-title">Mini Projects</h2>
+      <p class="section-sub">Small builds — learning + practice projects.</p>
+
+      <div class="grid">
+        <a class="mCard" href="https://iammohdanashub.github.io/projects/client-portfolio/" target="_blank" rel="noopener">
           <h3>Client Portfolio Website</h3>
-          <p>Real-world style website (services, pricing, contact) — clean & professional.</p>
-          <div class="row">
-            <span class="tag">Real-world</span>
-            <a class="btn small primary" href="https://iammohdanashub.github.io/projects/client-portfolio/" target="_blank" rel="noopener">Open</a>
-          </div>
-        </div>
+          <p>Real-world style website (services, pricing, contact).</p>
+          <span class="mTag">Website</span>
+        </a>
 
-        <div class="card" data-img="landing-page.png">
-          <div class="shine"></div>
+        <a class="mCard" href="https://iammohdanashub.github.io/projects/landing-page/" target="_blank" rel="noopener">
           <h3>Animated Landing Page</h3>
-          <p>Premium landing page with typing, reveal, glow, tilt and ripple effects.</p>
-          <div class="row">
-            <span class="tag">Animation</span>
-            <a class="btn small primary" href="https://iammohdanashub.github.io/projects/landing-page/" target="_blank" rel="noopener">Open</a>
-          </div>
-        </div>
+          <p>Typing + glow + reveal animations (premium landing demo).</p>
+          <span class="mTag">Animation</span>
+        </a>
 
-        <div class="card" data-img="calculator.png">
-          <div class="shine"></div>
+        <a class="mCard" href="https://iammohdanashub.github.io/projects/calculator/" target="_blank" rel="noopener">
           <h3>Calculator App</h3>
-          <p>Working calculator with history + keyboard support.</p>
-          <div class="row">
-            <span class="tag">JavaScript</span>
-            <a class="btn small primary" href="https://iammohdanashub.github.io/projects/calculator/" target="_blank" rel="noopener">Open</a>
-          </div>
-        </div>
+          <p>Working calculator with keyboard support.</p>
+          <span class="mTag">JavaScript</span>
+        </a>
 
-        <div class="card" data-img="login-page.png">
-          <div class="shine"></div>
+        <a class="mCard" href="https://iammohdanashub.github.io/projects/login-page/" target="_blank" rel="noopener">
           <h3>Glass Login Page</h3>
-          <p>Modern glassmorphism login UI — clean and responsive.</p>
-          <div class="row">
-            <span class="tag">UI</span>
-            <a class="btn small primary" href="https://iammohdanashub.github.io/projects/login-page/" target="_blank" rel="noopener">Open</a>
-          </div>
-        </div>
+          <p>Glassmorphism login UI — clean & responsive.</p>
+          <span class="mTag">UI</span>
+        </a>
       </div>
     </section>
 
     <section id="about" class="reveal">
       <h2 class="section-title">About</h2>
-     <p class="section-sub">
-     Hi, I’m Mohd Anas Khan (IamMohdAnas). I’m a front-end web developer focused on clean UI, responsive layouts and modern web design. I build real projects to improve daily and grow as a developer.
-     </p>
+      <p class="section-sub">
+        Hi, I’m Mohd Anas Khan (IamMohdAnas). I’m a front-end web developer focused on clean UI,
+        responsive layouts and modern web design. I build real projects to improve daily and grow as a developer.
+      </p>
     </section>
 
     <section id="contact" class="reveal">
@@ -783,45 +661,6 @@ footer{
   </footer>
 </div>
 
-<!-- ===== MODAL (ULTRA PREMIUM) ===== -->
-<div class="modal" id="projectModal" aria-hidden="true">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-top">
-      <h3 class="modal-title" id="modalTitle">Project</h3>
-
-      <div class="modal-nav">
-        <button class="icon-btn" id="prevBtn" aria-label="Previous">‹</button>
-        <button class="icon-btn" id="nextBtn" aria-label="Next">›</button>
-        <button class="icon-btn" id="playPauseBtn" aria-label="Pause">⏸</button>
-        <button class="icon-btn" id="modalClose" aria-label="Close">✕</button>
-      </div>
-    </div>
-
-    <div class="modal-body" id="modalBody">
-      <div class="modal-thumb" id="modalThumb">
-        <img id="modalImg" alt="Project preview" />
-        <div class="fallback" id="modalFallback">Preview coming soon</div>
-      </div>
-
-      <p class="modal-desc" id="modalDesc"></p>
-
-      <div class="modal-progress"><div id="modalBar"></div></div>
-
-      <div class="modal-dots">
-        <div class="dots" id="modalDots"></div>
-        <div class="counter" id="modalCount">1/4</div>
-      </div>
-
-      <div class="modal-meta" id="modalMeta"></div>
-
-      <div class="modal-actions">
-        <a class="btn primary" id="modalOpen" target="_blank" rel="noopener">Open Project</a>
-        <button class="btn ghost" id="modalCancel" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
 /* ===== LOADER HIDE ===== */
 const loader = document.getElementById("loader");
@@ -831,24 +670,6 @@ window.addEventListener("load", () => {
     setTimeout(() => loader?.remove(), 600);
   }, 450);
 });
-
-/* ===== TYPING ===== */
-const words = ["building daily.", "learning fast.", "creating clean UI.", "shipping projects."];
-let w = 0, i = 0, deleting = false;
-const typed = document.querySelector(".typed");
-function typeLoop(){
-  if(!typed) return;
-  const word = words[w];
-  if(!deleting){
-    typed.textContent = word.slice(0, i++);
-    if(i > word.length){ deleting = true; setTimeout(typeLoop, 900); return; }
-  }else{
-    typed.textContent = word.slice(0, i--);
-    if(i < 0){ deleting = false; w = (w+1)%words.length; i = 0; }
-  }
-  setTimeout(typeLoop, deleting ? 55 : 85);
-}
-typeLoop();
 
 /* ===== REVEAL ===== */
 const reveals = document.querySelectorAll(".reveal");
@@ -867,7 +688,7 @@ window.addEventListener("scroll", () => {
     if (scrollY >= secTop) current = sec.getAttribute("id");
   });
   navLinks.forEach(link => {
-    link.style.color = "#cbd5e1";
+    link.style.color = "var(--muted)";
     if(link.getAttribute("href") === "#" + current){
       link.style.color = "#22c55e";
     }
@@ -919,252 +740,28 @@ if(profileCard){
   });
 }
 
-/* ===== PROJECT CARDS TILT + SHINE ===== */
-document.querySelectorAll("#projects .card").forEach(card=>{
-  card.addEventListener("mousemove", (e)=>{
-    const r = card.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
+/* ===== THEME (default DARK, light only on button) ===== */
+const themeBtn = document.getElementById("themeBtn");
+const savedTheme = localStorage.getItem("theme"); // "light" or "dark"
 
-    const rx = ((y / r.height) - 0.5) * -10;
-    const ry = ((x / r.width)  - 0.5) *  10;
-
-    card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    card.style.setProperty("--mx", (x / r.width) * 100 + "%");
-    card.style.setProperty("--my", (y / r.height) * 100 + "%");
-  });
-
-  card.addEventListener("mouseleave", ()=>{
-    card.style.transform = "";
-  });
-});
-
-/* ===== MODAL + NEXT/PREV + SWIPE + DOTS + AUTOPLAY (FIXED) ===== */
-const modal = document.getElementById("projectModal");
-const modalClose = document.getElementById("modalClose");
-const modalCancel = document.getElementById("modalCancel");
-const modalTitle = document.getElementById("modalTitle");
-const modalDesc = document.getElementById("modalDesc");
-const modalMeta = document.getElementById("modalMeta");
-const modalOpen = document.getElementById("modalOpen");
-const modalImg = document.getElementById("modalImg");
-const modalFallback = document.getElementById("modalFallback");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const modalBar = document.getElementById("modalBar");
-const modalDots = document.getElementById("modalDots");
-const modalCount = document.getElementById("modalCount");
-const modalBody = document.getElementById("modalBody");
-const modalBoxEl = document.querySelector(".modal-box");
-
-const cards = Array.from(document.querySelectorAll("#projects .card"));
-const projects = cards.map(card => {
-  const title = card.querySelector("h3")?.textContent?.trim() || "Project";
-  const desc  = card.querySelector("p")?.textContent?.trim() || "";
-  const tag   = card.querySelector(".tag")?.textContent?.trim() || "";
-  const link  = card.querySelector("a")?.getAttribute("href") || "#";
-  const img   = card.getAttribute("data-img") || "";
-  return { title, desc, tags: [tag, "Live Demo"].filter(Boolean), link, img };
-});
-
-let currentIndex = 0;
-let autoplayOn = true;
-let autoplayTimer = null;
-
-function setPlayPauseUI(){
-  playPauseBtn.textContent = autoplayOn ? "⏸" : "▶";
-  playPauseBtn.setAttribute("aria-label", autoplayOn ? "Pause" : "Play");
-}
-
-function stopAutoplay(){
-  if(autoplayTimer) clearInterval(autoplayTimer);
-  autoplayTimer = null;
-}
-
-function startAutoplay(){
-  stopAutoplay();
-  if(!autoplayOn) return;
-  autoplayTimer = setInterval(()=>{
-    if(modal.classList.contains("show")) nextProject();
-  }, 2200);
-}
-
-function renderDots(){
-  modalDots.innerHTML = "";
-  projects.forEach((_, idx)=>{
-    const d = document.createElement("span");
-    if(idx === currentIndex) d.classList.add("active");
-    d.addEventListener("click", ()=> {
-      jumpTo(idx);
-    });
-    modalDots.appendChild(d);
-  });
-}
-
-function renderModal(){
-  const p = projects[currentIndex];
-  modalTitle.textContent = p.title || "Project";
-  modalDesc.textContent = p.desc || "";
-  modalOpen.href = p.link || "#";
-
-  modalMeta.innerHTML = "";
-  (p.tags || []).forEach(t=>{
-    const s = document.createElement("span");
-    s.className = "pill";
-    s.textContent = t;
-    modalMeta.appendChild(s);
-  });
-
-  modalImg.onload = () => { modalFallback.style.display = "none"; };
-  modalImg.onerror = () => { modalFallback.style.display = "flex"; };
-
-  if(p.img){
-    modalImg.src = p.img;
-    modalFallback.style.display = "flex";
+function applyTheme(mode){
+  if(mode === "light"){
+    document.body.classList.add("light");
+    themeBtn.textContent = "🌙";
   }else{
-    modalImg.src = "";
-    modalFallback.style.display = "flex";
+    document.body.classList.remove("light");
+    themeBtn.textContent = "☀️";
   }
-
-  const total = projects.length || 1;
-  modalCount.textContent = (currentIndex + 1) + "/" + total;
-  modalBar.style.width = ((currentIndex + 1) / total) * 100 + "%";
-  renderDots();
+  localStorage.setItem("theme", mode);
 }
+applyTheme(savedTheme === "light" ? "light" : "dark");
 
-function openModalAt(index){
-  if(projects.length === 0) return;
-  currentIndex = (index + projects.length) % projects.length;
-  renderModal();
-
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-
-  setPlayPauseUI();
-  startAutoplay();
-}
-
-function closeModal(){
-  modal.classList.remove("show");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-  stopAutoplay();
-}
-
-function animateSlide(dir){
-  if(!modalBody) return;
-  modalBody.classList.remove("slide-left","slide-right");
-  modalBody.classList.add(dir === "next" ? "slide-right" : "slide-left");
-  setTimeout(()=>modalBody.classList.remove("slide-left","slide-right"), 180);
-}
-
-function nextProject(){
-  animateSlide("next");
-  currentIndex = (currentIndex + 1) % projects.length;
-  renderModal();
-}
-
-function prevProject(){
-  animateSlide("prev");
-  currentIndex = (currentIndex - 1 + projects.length) % projects.length;
-  renderModal();
-}
-
-function jumpTo(idx){
-  if(idx === currentIndex) return;
-  animateSlide(idx > currentIndex ? "next" : "prev");
-  currentIndex = idx;
-  renderModal();
-}
-
-modalClose.addEventListener("click", closeModal);
-modalCancel.addEventListener("click", closeModal);
-nextBtn.addEventListener("click", nextProject);
-prevBtn.addEventListener("click", prevProject);
-
-modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
-
-document.addEventListener("keydown", (e)=>{
-  if(!modal.classList.contains("show")) return;
-  if(e.key === "Escape") closeModal();
-  if(e.key === "ArrowRight") nextProject();
-  if(e.key === "ArrowLeft") prevProject();
+themeBtn?.addEventListener("click", ()=>{
+  const isLight = document.body.classList.contains("light");
+  applyTheme(isLight ? "dark" : "light");
 });
 
-/* card click open modal (open button works normal) */
-cards.forEach((card, idx)=>{
-  card.style.cursor = "pointer";
-  card.addEventListener("click", (e)=>{
-    if(e.target.closest("a") || e.target.closest("button")) return;
-    openModalAt(idx);
-  });
-});
-
-/* ===== MOBILE SWIPE ===== */
-let startX = 0, endX = 0;
-if(modalBoxEl){
-  modalBoxEl.addEventListener("touchstart", (e)=>{
-    if(!modal.classList.contains("show")) return;
-    startX = e.touches[0].clientX;
-  }, {passive:true});
-
-  modalBoxEl.addEventListener("touchmove", (e)=>{
-    if(!modal.classList.contains("show")) return;
-    endX = e.touches[0].clientX;
-  }, {passive:true});
-
-  modalBoxEl.addEventListener("touchend", ()=>{
-    if(!modal.classList.contains("show")) return;
-    const diff = endX - startX;
-    if(diff > 60) prevProject();
-    else if(diff < -60) nextProject();
-    startX = 0; endX = 0;
-  });
-}
-
-/* autoplay play/pause */
-playPauseBtn.addEventListener("click", ()=>{
-  autoplayOn = !autoplayOn;
-  setPlayPauseUI();
-  if(autoplayOn) startAutoplay();
-  else stopAutoplay();
-});
-
-/* pause on hover / touch */
-if(modalBoxEl){
-  modalBoxEl.addEventListener("mouseenter", ()=> stopAutoplay());
-  modalBoxEl.addEventListener("mouseleave", ()=> startAutoplay());
-  modalBoxEl.addEventListener("touchstart", ()=> stopAutoplay(), {passive:true});
-  modalBoxEl.addEventListener("touchend", ()=> startAutoplay(), {passive:true});
-}
-setPlayPauseUI();
-
-/* ===== CONFETTI on OPEN PROJECT ===== */
-function confettiBurst(x, y){
-  const colors = ["#22c55e","#60a5fa","#34d399","#86efac","#a7f3d0"];
-  const pieces = 18;
-  for(let i=0;i<pieces;i++){
-    const c = document.createElement("span");
-    c.className = "confetti";
-    c.style.left = x + "px";
-    c.style.top  = y + "px";
-    c.style.background = colors[Math.floor(Math.random()*colors.length)];
-    const angle = (Math.PI * 2) * (i / pieces);
-    const dist = 60 + Math.random()*60;
-    c.style.setProperty("--x", Math.cos(angle)*dist + "px");
-    c.style.setProperty("--y", Math.sin(angle)*dist + 80 + "px");
-    document.body.appendChild(c);
-    setTimeout(()=> c.remove(), 900);
-  }
-}
-modalOpen.addEventListener("click", ()=>{
-  const rect = modalOpen.getBoundingClientRect();
-  confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
-});
-
-/* ===== PARTICLES + PARALLAX ===== */
+/* ===== PARTICLES ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 let W, H, dpr;
@@ -1180,7 +777,7 @@ function resize(){
 resize();
 window.addEventListener("resize", resize);
 
-const COUNT = 70;
+const COUNT = 65;
 const particles = [];
 function rand(min,max){ return Math.random()*(max-min)+min; }
 
@@ -1190,10 +787,10 @@ function resetParticles(){
     particles.push({
       x: rand(0,W),
       y: rand(0,H),
-      r: rand(1,2.6),
+      r: rand(1,2.5),
       vx: rand(-0.25,0.25),
       vy: rand(-0.18,0.18),
-      a: rand(0.15,0.5)
+      a: rand(0.12,0.45)
     });
   }
 }
@@ -1226,7 +823,7 @@ function draw(){
     ctx.fill();
   }
 
-  ctx.globalAlpha = 0.12;
+  ctx.globalAlpha = 0.10;
   for(let a=0;a<particles.length;a++){
     for(let b=a+1;b<particles.length;b++){
       const p1 = particles[a], p2 = particles[b];
